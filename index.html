@@ -45,15 +45,32 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .sit-title{font-size:13px;font-weight:700;color:#1A1917;}
 
 /* 상황 탭 */
-.sit-tab-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px;}
-.sit-tab{padding:9px 4px;border-radius:10px;border:1.5px solid rgba(0,0,0,0.1);background:#fff;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer;color:#6B6A66;transition:all 0.12s;}
+.sit-tab-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:6px;}
+.sit-tab{padding:9px 4px;border-radius:10px;border:1.5px solid rgba(0,0,0,0.1);background:#fff;font-size:11px;font-weight:700;font-family:inherit;cursor:pointer;color:#6B6A66;transition:all 0.12s;}
 .sit-tab:hover{background:#F5F4F1;}
 .sit-tab.on{border-color:#1A1917;background:#1A1917;color:#fff;}
+
+/* 세부 탭 */
+.sub-tab-row{display:flex;gap:6px;margin-bottom:10px;}
+.sub-tab{padding:7px 12px;border-radius:99px;border:1.5px solid rgba(0,0,0,0.1);background:#fff;font-size:11px;font-weight:700;font-family:inherit;cursor:pointer;color:#6B6A66;transition:all 0.12s;white-space:nowrap;}
+.sub-tab:hover{background:#F5F4F1;}
+.sub-tab.on{border-color:#534AB7;background:#534AB7;color:#fff;}
 
 /* 개인화 탭 */
 .personal-tab-row{display:flex;gap:6px;margin-bottom:1.25rem;background:#F5F4F1;border-radius:12px;padding:4px;}
 .personal-tab{flex:1;padding:8px;border-radius:8px;border:none;background:none;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;color:#6B6A66;transition:all 0.12s;}
 .personal-tab.on{background:#fff;color:#1A1917;box-shadow:0 1px 4px rgba(0,0,0,0.1);}
+
+/* 다중선택 */
+.multi-bar{display:flex;align-items:center;justify-content:space-between;background:#EEEDFE;border-radius:12px;padding:10px 14px;margin-bottom:12px;}
+.multi-bar-txt{font-size:13px;color:#534AB7;font-weight:600;}
+.btn-demo{padding:8px 18px;background:#534AB7;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;transition:opacity 0.15s;}
+.btn-demo:disabled{opacity:0.35;cursor:default;}
+.btn-demo:not(:disabled):hover{opacity:0.85;}
+.notif-btn{position:relative;}
+.notif-btn .check-mark{position:absolute;top:10px;right:10px;width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(0,0,0,0.15);background:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all 0.12s;}
+.notif-btn.checked{border-color:#534AB7;background:#EEEDFE;}
+.notif-btn.checked .check-mark{background:#534AB7;border-color:#534AB7;color:#fff;}
 
 /* 말투 그룹 */
 .tone-group{margin-bottom:14px;}
@@ -75,7 +92,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .demo-time{font-size:48px;font-weight:200;color:#fff;letter-spacing:-1px;text-align:center;margin-bottom:4px;}
 .demo-date{font-size:14px;color:rgba(255,255,255,0.6);text-align:center;margin-bottom:2.5rem;}
 .demo-hint{font-size:12px;color:rgba(255,255,255,0.35);text-align:center;position:absolute;bottom:1.5rem;}
-.demo-back{position:absolute;top:1rem;left:1rem;background:rgba(255,255,255,0.15);border:none;border-radius:99px;color:#fff;font-size:12px;font-family:inherit;padding:6px 14px;cursor:pointer;}
+.demo-back{position:absolute;top:1rem;left:1rem;background:rgba(255,255,255,0.15);border:none;border-radius:99px;color:#fff;font-size:12px;font-family:inherit;padding:6px 14px;cursor:pointer;z-index:20;}
 .demo-back:hover{background:rgba(255,255,255,0.25);}
 
 /* 푸시 알림 팝업 */
@@ -129,7 +146,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="list-sub">알림을 클릭하면 시연 화면으로 이동해요</div>
   </div>
 
-  <!-- 상황 탭 -->
+  <!-- 상황 탭 (1줄) -->
   <div class="sit-tab-row" id="sit-tab-row">
     <button class="sit-tab on" data-sit="A" onclick="selectSit('A',this)">A 세일</button>
     <button class="sit-tab" data-sit="B" onclick="selectSit('B',this)">B 배송+리뷰</button>
@@ -137,10 +154,23 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <button class="sit-tab" data-sit="D" onclick="selectSit('D',this)">D 상품추천</button>
   </div>
 
+  <!-- 세부 탭 (2줄) -->
+  <div class="sub-tab-row" id="sub-tab-row">
+    <button class="sub-tab" data-sit="E" onclick="selectSit('E',this)">😊 이모지</button>
+    <button class="sub-tab" data-sit="F" onclick="selectSit('F',this)">😄 유머 세부</button>
+    <button class="sub-tab" data-sit="G" onclick="selectSit('G',this)">⚡ 희소성 세부</button>
+  </div>
+
   <!-- 개인화 탭 -->
-  <div class="personal-tab-row">
+  <div class="personal-tab-row" id="personal-tab-row">
     <button class="personal-tab on" data-personal="true" onclick="selectPersonal(true,this)">이름 호명</button>
     <button class="personal-tab" data-personal="false" onclick="selectPersonal(false,this)">미적용</button>
+  </div>
+
+  <!-- 다중선택 바 -->
+  <div class="multi-bar">
+    <span class="multi-bar-txt" id="multi-count">0개 선택됨</span>
+    <button class="btn-demo" id="btn-demo" onclick="startMultiDemo()" disabled>시연하기</button>
   </div>
 
   <div id="notif-list"></div>
@@ -153,17 +183,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="demo-time" id="demo-time"></div>
     <div class="demo-date" id="demo-date"></div>
     <div class="countdown" id="countdown"></div>
-    <div class="push-popup" id="push-popup">
-      <div class="notif-icon">🛍️</div>
-      <div class="notif-content">
-        <div class="notif-header">
-          <div class="notif-title-text" id="popup-title"></div>
-          <div class="notif-time">방금 전</div>
-        </div>
-        <div class="notif-body-text" id="popup-body"></div>
-        <div class="notif-unsub">수신거부: MY &gt; 설정</div>
-      </div>
-    </div>
+    <!-- 다중 팝업 컨테이너 -->
+    <div id="popup-container" style="position:absolute;top:1rem;left:1rem;right:1rem;display:flex;flex-direction:column;gap:8px;z-index:10;"></div>
     <div class="demo-hint">화면을 탭하면 알림이 사라져요</div>
   </div>
 </div>
@@ -178,176 +199,89 @@ function hasBatchim(str) {
   if (code < 0xAC00 || code > 0xD7A3) return false;
   return (code - 0xAC00) % 28 !== 0;
 }
-// 성 제외 이름만 추출 (2글자 이상이면 첫 글자를 성으로 처리)
 function firstName(fullName) {
   if (!fullName) return fullName;
   return fullName.length >= 2 ? fullName.slice(1) : fullName;
 }
-// 조사 선택 (이름 기준)
 function josa(name, type) {
   const fn = firstName(name);
   const b = hasBatchim(fn);
-  const map = { '은는': b?'은':'는', '이가': b?'이':'가', '을를': b?'을':'를', '와과': b?'과':'와', '아야': b?'아':'야', '으로로': b?'으로':'로' };
+  const map = { '은는':b?'은':'는','이가':b?'이':'가','을를':b?'을':'를','와과':b?'과':'와','아야':b?'아':'야','으로로':b?'으로':'로' };
   return map[type] || '';
 }
-// 님 호칭 (이름만 + 님)
 function nim(name) { return firstName(name) + '님'; }
 
+// ── 이모지 탭 고정 데이터 ──────────────────────────────────
+const EMOJI_NOTIFS = [
+  { id:'E0', sit:'E', tone:'이모지 없음', personal:false, title:'HOT한 [슈가파우더] 직잭 입점!', body:'(광고) 입점 기념 30% 쿠폰을 드려요' },
+  { id:'E1', sit:'E', tone:'이모지 일부', personal:false, title:'HOT한 [슈가파우더] 직잭 입점!', body:'(광고) 입점 기념 30% 쿠폰을 드려요 🎫' },
+  { id:'E2', sit:'E', tone:'이모지 풀',   personal:false, title:'HOT한 [슈가파우더] 직잭 입점! 💖', body:'(광고) 입점 기념 30% 쿠폰을 드려요 🎫' },
+];
+const HUMOR_NOTIFS = [
+  { id:'F0', sit:'F', tone:'인격화',   personal:false, title:'안녕하세요, 에이블리 신입이에요🙂', body:'(광고) 제가 52% 할인 이벤트를 처음 준비했는데 빨리 들어오…' },
+  { id:'F1', sit:'F', tone:'밈',       personal:false, title:'나 됐어요 피자 당첨 됐어요!!!', body:'(광고) 이번주 마감 🍕🥤💰받기 ❯' },
+  { id:'F2', sit:'F', tone:'어그로성', personal:false, title:'초성 힌트: ㅁㄱㅅㅇ에서 ㅌㅅㄹ 준대요!', body:'(광고) 정답 확인 >' },
+];
+const SCARCITY_NOTIFS = [
+  { id:'G0', sit:'G', tone:'혜택 강조 / 기간 명시',   personal:false, title:'[게릴라 이벤트] 스벅 기프티콘 오픈!', body:'(광고) 오늘 하루만 참여할 수 있는 이벤트예요💚' },
+  { id:'G1', sit:'G', tone:'손실 강조 / 기간 명시X', personal:false, title:'디저트 팝업 곧 종료, 놓치면 후회해요!!', body:'(광고) 과일샌드•쫀득빵… [무료 디저트]까지🍰' },
+  { id:'G2', sit:'G', tone:'손실 강조 / 기간 명시',   personal:false, title:'🚨쇼핑몰 전 상품 쿠폰 오늘 마감!', body:'(광고) 금방 벚꽃 엔딩되니까… 서두르세요!' },
+];
+
 // ── 알림 데이터 ─────────────────────────────────────────────
-// 00 → 이름, 조사는 함수로 처리
 function buildNotifs(name) {
-  const fn = firstName(name); // 이름만 (성 제외)
+  const fn = firstName(name);
   return [
-    // ── 상황 A 세일 ──────────────────────────────────────
-    {
-      sit:'A', sitLabel:'세일', tone:'희소성·긴박함', personal:true,
-      title:'오늘 자정까지만!!',
-      body:`(광고) ${nim(name)}${josa(name,'을를')} 위한 전 상품 30% 할인, 지금 안 담으면 내일 후회해요!`
-    },
-    {
-      sit:'A', sitLabel:'세일', tone:'희소성·긴박함', personal:false,
-      title:'오늘 자정까지만!!',
-      body:'(광고) 회원님을 위한 전 상품 30% 할인, 지금 안 담으면 내일 후회해요!'
-    },
-    {
-      sit:'A', sitLabel:'세일', tone:'유머·친근함', personal:true,
-      title:'실화인가요??',
-      body:`(광고) 오늘 자정까지 무려 전 상품 30% 쿠폰이라니… ${nim(name)}${josa(name,'이가')} 지갑 열 준비 되셨죠?`
-    },
-    {
-      sit:'A', sitLabel:'세일', tone:'유머·친근함', personal:false,
-      title:'실화인가요??',
-      body:'(광고) 오늘 자정까지 무려 전 상품 30% 쿠폰이라니… 지갑 열 준비 되셨죠?'
-    },
-    {
-      sit:'A', sitLabel:'세일', tone:'직접·정보전달', personal:true,
-      title:'S/S 할인 이벤트',
-      body:`(광고) ${nim(name)}, 오늘 자정까지 전 카테고리 30% 할인이 적용돼요. 확인해보세요!`
-    },
-    {
-      sit:'A', sitLabel:'세일', tone:'직접·정보전달', personal:false,
-      title:'S/S 할인 이벤트',
-      body:'(광고) 오늘 자정까지 전 카테고리 30% 할인이 적용돼요. 확인해보세요!'
-    },
-    // ── 상황 B 배송+리뷰 ─────────────────────────────────
-    {
-      sit:'B', sitLabel:'배송+리뷰', tone:'희소성·긴박함', personal:true,
-      title:`${nim(name)}, 단 하루 남았어요!!`,
-      body:'(광고) 상품은 잘 받으셨나요? 오늘 리뷰를 쓰지 않으면 2,000 포인트가 사라져요.'
-    },
-    {
-      sit:'B', sitLabel:'배송+리뷰', tone:'희소성·긴박함', personal:false,
-      title:'단 하루 남았어요!!',
-      body:'(광고) 상품은 잘 받으셨나요? 오늘 리뷰를 쓰지 않으면 2,000 포인트가 사라져요.'
-    },
-    {
-      sit:'B', sitLabel:'배송+리뷰', tone:'유머·친근함', personal:true,
-      title:`${nim(name)}… 상품 잘 도착했나요?`,
-      body:'(광고)이긴 하지만 리뷰 하나면 저희가 정말 뿌듯할 것 같아요. 포인트 2,000점도 드릴게요.'
-    },
-    {
-      sit:'B', sitLabel:'배송+리뷰', tone:'유머·친근함', personal:false,
-      title:'똑똑… 상품 잘 도착했나요?',
-      body:'(광고)이긴 하지만 리뷰 하나면 저희가 정말 뿌듯할 것 같아요. 포인트 2,000점도 드릴게요.'
-    },
-    {
-      sit:'B', sitLabel:'배송+리뷰', tone:'직접·정보전달', personal:true,
-      title:`${nim(name)}, 상품은 잘 받으셨나요?`,
-      body:'(광고) 구매하신 상품의 리뷰를 남겨주시면 포인트 2,000점을 드려요!'
-    },
-    {
-      sit:'B', sitLabel:'배송+리뷰', tone:'직접·정보전달', personal:false,
-      title:'회원님, 상품은 잘 받으셨나요?',
-      body:'(광고) 구매하신 상품의 리뷰를 남겨주시면 포인트 2,000점을 드려요!'
-    },
-    // ── 상황 C 출석체크 ──────────────────────────────────
-    {
-      sit:'C', sitLabel:'출석체크', tone:'희소성·긴박함', personal:true,
-      title:`${nim(name)}, 곧 출석체크 마감이에요!!`,
-      body:'(광고) 지금 접속해야 포인트 100점을 받아요. 자정이 지나면 사라져요!'
-    },
-    {
-      sit:'C', sitLabel:'출석체크', tone:'희소성·긴박함', personal:false,
-      title:'회원님, 곧 출석체크 마감이에요!!',
-      body:'(광고) 지금 접속해야 포인트 100점을 받아요. 자정이 지나면 사라져요!'
-    },
-    {
-      sit:'C', sitLabel:'출석체크', tone:'유머·친근함', personal:true,
-      title:`${nim(name)}… 많이 바쁘신가요?`,
-      body:'(광고) 오늘 잠깐이라도 들어와 주세요. 100 포인트와 함께 기다릴게요!'
-    },
-    {
-      sit:'C', sitLabel:'출석체크', tone:'유머·친근함', personal:false,
-      title:'회원님… 많이 바쁘신가요?',
-      body:'(광고) 오늘 잠깐이라도 들어와 주세요. 100 포인트와 함께 기다릴게요!'
-    },
-    {
-      sit:'C', sitLabel:'출석체크', tone:'직접·정보전달', personal:true,
-      title:`${nim(name)}, 출석체크하면 포인트 100점이에요.`,
-      body:'(광고) 매일 접속하시면 포인트가 쌓여요! 자정까지 참여 가능해요.'
-    },
-    {
-      sit:'C', sitLabel:'출석체크', tone:'직접·정보전달', personal:false,
-      title:'출석체크하면 포인트 100점이에요.',
-      body:'(광고) 매일 접속하시면 포인트가 쌓여요! 자정까지 참여 가능해요.'
-    },
-    // ── 상황 D 상품추천 ──────────────────────────────────
-    {
-      sit:'D', sitLabel:'상품추천', tone:'희소성·긴박함', personal:true,
-      title:'뉴발란스 S/S 신상, 놓치면 후회해요!',
-      body:`(광고) 인기 상품은 빠르게 품절돼요. ${nim(name)}, 서둘러 클릭하세요!!`
-    },
-    {
-      sit:'D', sitLabel:'상품추천', tone:'희소성·긴박함', personal:false,
-      title:'뉴발란스 S/S 신상, 놓치면 후회해요!',
-      body:'(광고) 출시 첫날! 인기 상품은 빠르게 품절돼요. 서둘러 클릭하세요!!'
-    },
-    {
-      sit:'D', sitLabel:'상품추천', tone:'유머·친근함', personal:true,
-      title:`뉴발란스 S/S 신상 떴어요, ${nim(name)}! 같이 볼래요?`,
-      body:'(광고) 뉴발 신상은 못참지… 지금 바로 확인해보세요!'
-    },
-    {
-      sit:'D', sitLabel:'상품추천', tone:'유머·친근함', personal:false,
-      title:'뉴발란스 S/S 신상 떴어요! 같이 볼래요?',
-      body:'(광고) 뉴발 신상은 못참지… 지금 바로 확인해보세요!'
-    },
-    {
-      sit:'D', sitLabel:'상품추천', tone:'직접·정보전달', personal:true,
-      title:`${nim(name)}, 뉴발란스 S/S 신상이 업데이트됐어요.`,
-      body:'(광고) 2026 S/S 신상품이 입고됐어요. 지금 앱에서 확인하세요!'
-    },
-    {
-      sit:'D', sitLabel:'상품추천', tone:'직접·정보전달', personal:false,
-      title:'뉴발란스 S/S 신상이 업데이트됐어요.',
-      body:'(광고) 2026 S/S 신상품이 입고됐어요. 지금 앱에서 확인하세요!'
-    },
+    { id:'A0', sit:'A', tone:'희소성·긴박함', personal:true,  title:'오늘 자정까지만!!', body:`(광고) ${nim(name)}을 위한 전 상품 30% 할인, 지금 안 담으면 내일 후회해요!` },
+    { id:'A1', sit:'A', tone:'희소성·긴박함', personal:false, title:'오늘 자정까지만!!', body:'(광고) 회원님을 위한 전 상품 30% 할인, 지금 안 담으면 내일 후회해요!' },
+    { id:'A2', sit:'A', tone:'유머·친근함',   personal:true,  title:'실화인가요??', body:`(광고) 오늘 자정까지 무려 전 상품 30% 쿠폰이라니… ${nim(name)}${josa(name,'이가')} 지갑 열 준비 되셨죠?` },
+    { id:'A3', sit:'A', tone:'유머·친근함',   personal:false, title:'실화인가요??', body:'(광고) 오늘 자정까지 무려 전 상품 30% 쿠폰이라니… 지갑 열 준비 되셨죠?' },
+    { id:'A4', sit:'A', tone:'직접·정보전달', personal:true,  title:'S/S 할인 이벤트', body:`(광고) ${nim(name)}, 오늘 자정까지 전 카테고리 30% 할인이 적용돼요. 확인해보세요!` },
+    { id:'A5', sit:'A', tone:'직접·정보전달', personal:false, title:'S/S 할인 이벤트', body:'(광고) 오늘 자정까지 전 카테고리 30% 할인이 적용돼요. 확인해보세요!' },
+    { id:'B0', sit:'B', tone:'희소성·긴박함', personal:true,  title:`${nim(name)}, 단 하루 남았어요!!`, body:'(광고) 상품은 잘 받으셨나요? 오늘 리뷰를 쓰지 않으면 2,000 포인트가 사라져요.' },
+    { id:'B1', sit:'B', tone:'희소성·긴박함', personal:false, title:'단 하루 남았어요!!', body:'(광고) 상품은 잘 받으셨나요? 오늘 리뷰를 쓰지 않으면 2,000 포인트가 사라져요.' },
+    { id:'B2', sit:'B', tone:'유머·친근함',   personal:true,  title:`${nim(name)}… 상품 잘 도착했나요?`, body:'(광고)이긴 하지만 리뷰 하나면 저희가 정말 뿌듯할 것 같아요. 포인트 2,000점도 드릴게요.' },
+    { id:'B3', sit:'B', tone:'유머·친근함',   personal:false, title:'똑똑… 상품 잘 도착했나요?', body:'(광고)이긴 하지만 리뷰 하나면 저희가 정말 뿌듯할 것 같아요. 포인트 2,000점도 드릴게요.' },
+    { id:'B4', sit:'B', tone:'직접·정보전달', personal:true,  title:`${nim(name)}, 상품은 잘 받으셨나요?`, body:'(광고) 구매하신 상품의 리뷰를 남겨주시면 포인트 2,000점을 드려요!' },
+    { id:'B5', sit:'B', tone:'직접·정보전달', personal:false, title:'회원님, 상품은 잘 받으셨나요?', body:'(광고) 구매하신 상품의 리뷰를 남겨주시면 포인트 2,000점을 드려요!' },
+    { id:'C0', sit:'C', tone:'희소성·긴박함', personal:true,  title:`${nim(name)}, 곧 출석체크 마감이에요!!`, body:'(광고) 지금 접속해야 포인트 100점을 받아요. 자정이 지나면 사라져요!' },
+    { id:'C1', sit:'C', tone:'희소성·긴박함', personal:false, title:'회원님, 곧 출석체크 마감이에요!!', body:'(광고) 지금 접속해야 포인트 100점을 받아요. 자정이 지나면 사라져요!' },
+    { id:'C2', sit:'C', tone:'유머·친근함',   personal:true,  title:`${nim(name)}… 많이 바쁘신가요?`, body:'(광고) 오늘 잠깐이라도 들어와 주세요. 100 포인트와 함께 기다릴게요!' },
+    { id:'C3', sit:'C', tone:'유머·친근함',   personal:false, title:'회원님… 많이 바쁘신가요?', body:'(광고) 오늘 잠깐이라도 들어와 주세요. 100 포인트와 함께 기다릴게요!' },
+    { id:'C4', sit:'C', tone:'직접·정보전달', personal:true,  title:`${nim(name)}, 출석체크하면 포인트 100점이에요.`, body:'(광고) 매일 접속하시면 포인트가 쌓여요! 자정까지 참여 가능해요.' },
+    { id:'C5', sit:'C', tone:'직접·정보전달', personal:false, title:'출석체크하면 포인트 100점이에요.', body:'(광고) 매일 접속하시면 포인트가 쌓여요! 자정까지 참여 가능해요.' },
+    { id:'D0', sit:'D', tone:'희소성·긴박함', personal:true,  title:'뉴발란스 S/S 신상, 놓치면 후회해요!', body:`(광고) 인기 상품은 빠르게 품절돼요. ${nim(name)}, 서둘러 클릭하세요!!` },
+    { id:'D1', sit:'D', tone:'희소성·긴박함', personal:false, title:'뉴발란스 S/S 신상, 놓치면 후회해요!', body:'(광고) 출시 첫날! 인기 상품은 빠르게 품절돼요. 서둘러 클릭하세요!!' },
+    { id:'D2', sit:'D', tone:'유머·친근함',   personal:true,  title:`뉴발란스 S/S 신상 떴어요, ${nim(name)}! 같이 볼래요?`, body:'(광고) 뉴발 신상은 못참지… 지금 바로 확인해보세요!' },
+    { id:'D3', sit:'D', tone:'유머·친근함',   personal:false, title:'뉴발란스 S/S 신상 떴어요! 같이 볼래요?', body:'(광고) 뉴발 신상은 못참지… 지금 바로 확인해보세요!' },
+    { id:'D4', sit:'D', tone:'직접·정보전달', personal:true,  title:`${nim(name)}, 뉴발란스 S/S 신상이 업데이트됐어요.`, body:'(광고) 2026 S/S 신상품이 입고됐어요. 지금 앱에서 확인하세요!' },
+    { id:'D5', sit:'D', tone:'직접·정보전달', personal:false, title:'뉴발란스 S/S 신상이 업데이트됐어요.', body:'(광고) 2026 S/S 신상품이 입고됐어요. 지금 앱에서 확인하세요!' },
   ];
 }
 
 // ── 상태 ──────────────────────────────────────────────────
 let userName = '';
-let demoTimer = null;
-let countTimer = null;
+let currentSit = 'A';
+let currentPersonal = true;
+let selectedItems = []; // 다중선택
+let demoTimers = [];
 
 // ── 이름 입력 ──────────────────────────────────────────────
 function onNameInput() {
   const val = document.getElementById('name-input').value.trim();
   document.getElementById('btn-start').disabled = val.length === 0;
 }
-
 function startDemo() {
   const val = document.getElementById('name-input').value.trim();
   if (!val) return;
   userName = val;
+  currentSit = 'A';
+  currentPersonal = true;
+  selectedItems = [];
   renderList();
   showPage('page-list');
 }
-
-function goBack() {
-  showPage('page-name');
-}
-
+function goBack() { showPage('page-name'); }
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -355,9 +289,6 @@ function showPage(id) {
 }
 
 // ── 목록 렌더 ─────────────────────────────────────────────
-let currentSit = 'A';
-let currentPersonal = true;
-
 function renderList() {
   document.getElementById('list-name-display').textContent = firstName(userName) + '님';
   renderNotifList();
@@ -365,8 +296,13 @@ function renderList() {
 
 function selectSit(sit, btn) {
   currentSit = sit;
-  document.querySelectorAll('.sit-tab').forEach(b => b.classList.remove('on'));
+  // 모든 탭 on 해제
+  document.querySelectorAll('.sit-tab, .sub-tab').forEach(b => b.classList.remove('on'));
   btn.classList.add('on');
+  // 개인화 탭: A~D만 표시
+  const ptRow = document.getElementById('personal-tab-row');
+  ptRow.style.display = ['A','B','C','D'].includes(sit) ? 'flex' : 'none';
+  updateMultiBar();
   renderNotifList();
 }
 
@@ -374,25 +310,58 @@ function selectPersonal(isPersonal, btn) {
   currentPersonal = isPersonal;
   document.querySelectorAll('.personal-tab').forEach(b => b.classList.remove('on'));
   btn.classList.add('on');
+  updateMultiBar();
   renderNotifList();
 }
 
+function toggleSelect(item, btn) {
+  const idx = selectedItems.findIndex(i => i.id === item.id);
+  if (idx > -1) {
+    selectedItems.splice(idx, 1);
+    btn.classList.remove('checked');
+    btn.querySelector('.check-mark').textContent = '';
+  } else {
+    selectedItems.push(item);
+    btn.classList.add('checked');
+    btn.querySelector('.check-mark').textContent = '✓';
+  }
+  updateMultiBar();
+}
+
+function updateMultiBar() {
+  const cnt = selectedItems.length;
+  document.getElementById('multi-count').textContent = `${cnt}개 선택됨`;
+  document.getElementById('btn-demo').disabled = cnt === 0;
+}
+
 function renderNotifList() {
-  const notifs = buildNotifs(userName);
-  const tones = ['희소성·긴박함', '유머·친근함', '직접·정보전달'];
+  let allNotifs, tones;
+  if (currentSit === 'E') {
+    allNotifs = EMOJI_NOTIFS;
+    tones = ['이모지 없음','이모지 일부','이모지 풀'];
+  } else if (currentSit === 'F') {
+    allNotifs = HUMOR_NOTIFS;
+    tones = ['인격화','밈','어그로성'];
+  } else if (currentSit === 'G') {
+    allNotifs = SCARCITY_NOTIFS;
+    tones = ['혜택 강조 / 기간 명시','손실 강조 / 기간 명시X','손실 강조 / 기간 명시'];
+  } else {
+    allNotifs = buildNotifs(userName).filter(n => n.sit === currentSit && n.personal === currentPersonal);
+    tones = ['희소성·긴박함','유머·친근함','직접·정보전달'];
+  }
   const container = document.getElementById('notif-list');
   container.innerHTML = '';
 
-  const filtered = notifs.filter(n => n.sit === currentSit && n.personal === currentPersonal);
-
   tones.forEach(tone => {
-    const item = filtered.find(n => n.tone === tone);
+    const item = allNotifs.find(n => n.tone === tone);
     if (!item) return;
+    const isChecked = selectedItems.some(i => i.id === item.id);
 
     const tg = document.createElement('div'); tg.className = 'tone-group';
     const tl = document.createElement('div'); tl.className = 'tone-label'; tl.textContent = tone; tg.appendChild(tl);
 
-    const btn = document.createElement('button'); btn.className = 'notif-btn';
+    const btn = document.createElement('button');
+    btn.className = 'notif-btn' + (isChecked ? ' checked' : '');
     btn.innerHTML = `
       <div class="notif-icon">🛍️</div>
       <div class="notif-content">
@@ -402,64 +371,92 @@ function renderNotifList() {
         </div>
         <div class="notif-body-text">${item.body}</div>
         <div class="notif-unsub">수신거부: MY &gt; 설정</div>
-      </div>`;
-    btn.onclick = () => openDemoPage(item);
+      </div>
+      <div class="check-mark">${isChecked ? '✓' : ''}</div>`;
+    btn.onclick = () => toggleSelect(item, btn);
     tg.appendChild(btn);
     container.appendChild(tg);
   });
 }
 
 // ── 시연 페이지 ───────────────────────────────────────────
-function openDemoPage(item) {
-  clearTimeout(demoTimer); clearInterval(countTimer);
-  document.getElementById('popup-title').textContent = item.title;
-  document.getElementById('popup-body').textContent = item.body;
-  const popup = document.getElementById('push-popup');
-  popup.classList.remove('show');
+function startMultiDemo() {
+  if (!selectedItems.length) return;
+  demoTimers.forEach(t => { clearTimeout(t); clearInterval(t); });
+  demoTimers = [];
 
-  // 현재 시각
   const now = new Date();
   const h = now.getHours().toString().padStart(2,'0');
   const m = now.getMinutes().toString().padStart(2,'0');
-  document.getElementById('demo-time').textContent = `${h}:${m}`;
+  document.getElementById('demo-time').textContent = h+':'+m;
   const days = ['일','월','화','수','목','금','토'];
-  document.getElementById('demo-date').textContent = `${now.getMonth()+1}월 ${now.getDate()}일 ${days[now.getDay()]}요일`;
+  document.getElementById('demo-date').textContent = (now.getMonth()+1)+'월 '+now.getDate()+'일 '+days[now.getDay()]+'요일';
+
+  const container = document.getElementById('popup-container');
+  container.innerHTML = '';
+
+  const popups = selectedItems.map(item => {
+    const popup = document.createElement('div');
+    popup.className = 'push-popup';
+    popup.style.cssText = 'position:relative;top:auto;left:auto;right:auto;opacity:0;transform:translateY(-20px);transition:opacity 0.4s ease,transform 0.4s cubic-bezier(0.34,1.56,0.64,1);cursor:pointer;';
+    popup.innerHTML =
+      '<div class="notif-icon">🛍️</div>' +
+      '<div class="notif-content">' +
+        '<div class="notif-header">' +
+          '<div class="notif-title-text">'+item.title+'</div>' +
+          '<div class="notif-time">방금 전</div>' +
+        '</div>' +
+        '<div class="notif-body-text">'+item.body+'</div>' +
+        '<div class="notif-unsub">수신거부: MY &gt; 설정</div>' +
+      '</div>';
+    popup.addEventListener('click', function() {
+      popup.style.opacity = '0';
+      popup.style.transform = 'translateY(-20px)';
+    });
+    container.appendChild(popup);
+    return popup;
+  });
 
   showPage('page-demo');
 
-  // 랜덤 딜레이 3~5초
   const delay = Math.floor(Math.random() * 2000) + 3000;
   let remaining = Math.ceil(delay / 1000);
-  document.getElementById('countdown').textContent = `${remaining}초 후 알림이 도착해요`;
-
-  countTimer = setInterval(() => {
+  const countEl = document.getElementById('countdown');
+  countEl.textContent = remaining+'초 후 알림이 도착해요';
+  const cTimer = setInterval(function() {
     remaining--;
-    if (remaining > 0) {
-      document.getElementById('countdown').textContent = `${remaining}초 후 알림이 도착해요`;
-    } else {
-      document.getElementById('countdown').textContent = '';
-      clearInterval(countTimer);
-    }
+    if (remaining > 0) countEl.textContent = remaining+'초 후 알림이 도착해요';
+    else { countEl.textContent = ''; clearInterval(cTimer); }
   }, 1000);
+  demoTimers.push(cTimer);
 
-  demoTimer = setTimeout(() => {
-    popup.classList.add('show');
-    document.getElementById('countdown').textContent = '';
+  const t = setTimeout(function() {
+    popups.forEach(function(popup, i) {
+      const t2 = setTimeout(function() {
+        popup.style.opacity = '1';
+        popup.style.transform = 'translateY(0)';
+      }, i * 500);
+      demoTimers.push(t2);
+    });
   }, delay);
-
-  // 화면 탭 시 알림 사라짐
-  document.getElementById('demo-bg').onclick = (e) => {
-    if (e.target.classList.contains('demo-back')) return;
-    if (popup.classList.contains('show')) popup.classList.remove('show');
-  };
+  demoTimers.push(t);
 }
 
 function backToList() {
-  clearTimeout(demoTimer); clearInterval(countTimer);
-  document.getElementById('push-popup').classList.remove('show');
+  demoTimers.forEach(function(t) { clearTimeout(t); clearInterval(t); });
+  demoTimers = [];
+  document.getElementById('countdown').textContent = '';
+  document.getElementById('popup-container').innerHTML = '';
   showPage('page-list');
   window.scrollTo(0, 0);
 }
+
+// ── 알림 데이터 ─────────────────────────────────────────────
+// 00 → 이름, 조사는 함수로 처리
+// ── 상태 ──────────────────────────────────────────────────
+
+
+// ── 목록 렌더 ─────────────────────────────────────────────
 </script>
 </body>
 </html>
